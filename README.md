@@ -1,1 +1,1 @@
-# django-poetry-git
+### Django project with Django Rest Framework for School App
