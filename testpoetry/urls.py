@@ -17,7 +17,7 @@ Including another URLconf
 from rest_framework import permissions
 from django.urls import path, include
 from drf_yasg import openapi, views
-from myapp import urls, routing
+from school import urls
 
 
 SchemaView = views.get_schema_view(
@@ -36,7 +36,5 @@ SchemaView = views.get_schema_view(
 urlpatterns = [
     path('docs/swagger', SchemaView.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc', SchemaView.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    path('', include(urls)),
-    path('', include(routing.websocket_urlpatterns))
-
+    path('', include(urls))
 ]

@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('myapp', '0003_rename_group_groupmodel_rename_student_studentmodel'),
+        ('school', '0003_rename_group_groupmodel_rename_student_studentmodel'),
     ]
 
     operations = [

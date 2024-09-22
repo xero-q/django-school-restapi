@@ -4,15 +4,10 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
 from .models import PersonModel, GroupModel, StudentModel, SubjectModel, ExamModel
-from .serializers import PersonModelSerializer, GroupModelSerializer, StudentModelSerializer, SubjectModelSerializer,ExamModelSerializer
+from .serializers import PersonModelSerializer, GroupModelSerializer, \
+                  StudentModelSerializer, SubjectModelSerializer,ExamModelSerializer
 from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
-
-# Create your views here.
-class HomeView(APIView):
-    def get(self, request):
-        name = request.query_params['name']
-        return Response('Hola Mundo, ' + name,status=status.HTTP_200_OK)
 
 class PersonListCreateView(generics.ListCreateAPIView):
     queryset = PersonModel.objects.all()
@@ -60,11 +55,6 @@ class SubjectListCreateView(generics.ListCreateAPIView):
 class ExamListCreateView(generics.ListCreateAPIView):
     queryset = ExamModel.objects.all()
     serializer_class = ExamModelSerializer     
-
-@api_view()
-def hello(request,name):
-    return Response({'message':'Hola, '+name})
-
 
 @api_view()
 def students_by_group(request):
