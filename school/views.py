@@ -1,29 +1,12 @@
 from django.shortcuts import render
-from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
-from .models import PersonModel, GroupModel, StudentModel, SubjectModel, ExamModel
-from .serializers import PersonModelSerializer, GroupModelSerializer, \
+from .models import GroupModel, StudentModel, SubjectModel, ExamModel
+from .serializers import GroupModelSerializer, \
                   StudentModelSerializer, SubjectModelSerializer,ExamModelSerializer
 from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
-
-class PersonListCreateView(generics.ListCreateAPIView):
-    queryset = PersonModel.objects.all()
-    serializer_class = PersonModelSerializer
-
-    def get_queryset(self):
-        queryset = PersonModel.objects.all()
-        filter_value = self.request.query_params.get('name', None)
-        if filter_value is not None:
-            queryset = queryset.filter(name__icontains=filter_value)
-        return queryset
-
-class PersonRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = PersonModel.objects.all()
-    serializer_class = PersonModelSerializer
-
 
 class GroupListCreateView(generics.ListCreateAPIView):
     queryset = GroupModel.objects.all()

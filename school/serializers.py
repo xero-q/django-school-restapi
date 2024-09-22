@@ -1,22 +1,6 @@
 from rest_framework import serializers
-from .models import PersonModel, GroupModel, StudentModel, SubjectModel, ExamModel
+from .models import GroupModel, StudentModel, SubjectModel, ExamModel
 import phonenumbers
-
-class PersonModelSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PersonModel
-        fields = ['id', 'name', 'dob', 'sex', 'address', 'phone']
-
-    def validate_phone(self, value):
-        # Perform validation for phone number here if needed
-        try:
-            phone_number = phonenumbers.parse(value, None)
-            if not phonenumbers.is_valid_number(phone_number):
-                raise serializers.ValidationError(f'{value} is not a valid phone number.')
-        except phonenumbers.phonenumberutil.NumberParseException:
-            raise serializers.ValidationError(f'{value} is not a valid phone number.')
-        return value
-
 
 class GroupModelSerializer(serializers.ModelSerializer):
     class Meta:
@@ -55,6 +39,16 @@ class StudentModelSerializer(serializers.ModelSerializer):
         ret = super().to_representation(instance)
         ret['group'] = instance.group.name  # Use the subject's name
         return ret
+    
+    def validate_phone(self, value):
+        # Perform validation for phone number here if needed
+        try:
+            phone_number = phonenumbers.parse(value, None)
+            if not phonenumbers.is_valid_number(phone_number):
+                raise serializers.ValidationError(f'{value} is not a valid phone number.')
+        except phonenumbers.phonenumberutil.NumberParseException:
+            raise serializers.ValidationError(f'{value} is not a valid phone number.')
+        return value
 
 class SubjectModelSerializer(serializers.ModelSerializer):
    class Meta:

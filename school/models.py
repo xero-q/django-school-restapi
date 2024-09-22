@@ -11,16 +11,6 @@ def validate_phone_number(value):
     except phonenumbers.phonenumberutil.NumberParseException:
         raise ValidationError(f'{value} is not a valid phone number.')
 
-class PersonModel(models.Model):
-    name=models.CharField(max_length=200, verbose_name='Name')
-    dob=models.DateField(verbose_name='Birth Date')
-    sex=models.CharField(max_length=1, verbose_name='Sex')
-    address=models.CharField(max_length=255, null=True, verbose_name='Address')
-    phone=models.CharField(max_length=20,null=True,verbose_name='Phone number', validators=[validate_phone_number])
-
-    def __str__(self):
-        return self.name
-    
 class GroupModel(models.Model):
     name = models.CharField(max_length=255, unique=True, verbose_name='Name')
 
