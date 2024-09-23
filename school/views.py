@@ -23,7 +23,7 @@ class StudentPagination(PageNumberPagination):
     max_page_size = 100
 
 class StudentListCreateView(generics.ListCreateAPIView):
-    queryset = StudentModel.objects.all()
+    queryset = StudentModel.objects.prefetch_related('exams')
     serializer_class = StudentModelSerializer   
     pagination_class=StudentPagination
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
