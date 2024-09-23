@@ -9,7 +9,7 @@ from rest_framework.pagination import PageNumberPagination
 
 class GroupListCreateView(generics.ListCreateAPIView):
     queryset = GroupModel.objects.all()
-    serializer_class = GroupModelSerializer   
+    serializer_class = GroupModelSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 class GroupRetrieveUpdateDestroView(generics.RetrieveUpdateDestroyAPIView):
@@ -55,6 +55,10 @@ class ExamRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
 @api_view()
 def students_by_group(request):
+    """
+    Returns all groups with the amount of students each one has.
+   
+    """
     groups = GroupModel.get_groups_with_student_count()
 
     data = [{'group_name':group.name, 'student_count':group.student_count} for group in groups]
@@ -63,6 +67,12 @@ def students_by_group(request):
 
 @api_view()
 def top_student_by_group(request, group_id):
+    """
+    Returns the student with the best average score in exams
+
+    Args:
+        group_id (int): The ID of the group.        
+    """
     student = StudentModel.top_scoring_student_by_group(group_id)
 
     if not student:

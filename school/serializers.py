@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from .models import GroupModel, StudentModel, SubjectModel, ExamModel
 import phonenumbers
+from .models import GroupModel, StudentModel, SubjectModel, ExamModel
+
 
 class GroupModelSerializer(serializers.ModelSerializer):
     class Meta:

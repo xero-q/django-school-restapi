@@ -4,6 +4,12 @@ import phonenumbers
 
 # Create your models here.
 def validate_phone_number(value):
+    """
+    Validates a given phone number
+
+    Args
+        value (str): The phone number
+    """
     try:
         phone_number = phonenumbers.parse(value, None)  # Assuming international format
         if not phonenumbers.is_valid_number(phone_number):
@@ -22,6 +28,9 @@ class GroupModel(models.Model):
     
     @staticmethod
     def get_groups_with_student_count():
+        """
+        Returns all groups with the amount of students each one has
+        """
         return GroupModel.objects.annotate(student_count=models.Count('students')).order_by('-student_count')    
  
 class StudentModel(models.Model):
@@ -37,6 +46,12 @@ class StudentModel(models.Model):
     
     @staticmethod
     def top_scoring_student_by_group(group_id):
+        """
+        Returns the student with the top average score for a given group
+
+        Args
+            group_id (int): The ID of the group
+        """
         top_student = StudentModel.objects.filter(group=group_id) \
                                   .annotate(average_score=models.Avg('exams__score')) \
                                   .order_by('-average_score') \
