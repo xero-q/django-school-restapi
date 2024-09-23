@@ -22,17 +22,8 @@ class GroupModel(models.Model):
     
     @staticmethod
     def get_groups_with_student_count():
-        return GroupModel.objects.annotate(student_count=models.Count('students')).order_by('-student_count')
-    
-    @staticmethod
-    def get_groups_with_average_score(after_date):
-        from django.db.models import Avg
-        from django.db.models import Q
-
-        return GroupModel.objects.annotate(
-            average_score=Avg('students__exams__score', filter=Q(students__exams__date__gt=after_date))
-        ).order_by('-average_score')
-    
+        return GroupModel.objects.annotate(student_count=models.Count('students')).order_by('-student_count')    
+ 
 class StudentModel(models.Model):
     name=models.CharField(max_length=255, verbose_name='Name')
     phone=models.CharField(max_length=20,unique=True, verbose_name='Phone Number',validators=[validate_phone_number] )
