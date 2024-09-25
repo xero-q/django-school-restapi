@@ -81,3 +81,5 @@ def top_student_by_group(request, group_id):
     serialized_data = StudentModelSerializer(student)
 
     return Response(serialized_data.data,status=status.HTTP_200_OK)
+
+

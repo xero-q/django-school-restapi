@@ -69,13 +69,21 @@ class SubjectModel(models.Model):
         return self.name
 
 
+class ExamType(models.TextChoices):
+    partial='Partial'
+    final='Final'
+
 class ExamModel(models.Model):
     student = models.ForeignKey(StudentModel, on_delete=models.CASCADE, related_name='exams')
     subject = models.ForeignKey(SubjectModel, on_delete=models.CASCADE, related_name='exams')
     score = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Score')
+    type=models.CharField(max_length=200,choices=ExamType, default=ExamType.partial)
     date = models.DateField(verbose_name='Exam Date')
 
     def __str__(self):
         return f"{self.student} - {self.subject} ({self.score})"
+    
+    class Meta:
+        db_table = 'exam'
     
 
