@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import sys
+import traceback
 
 load_dotenv()
 
@@ -153,3 +155,18 @@ LOGGING = {
         'level': 'INFO',
     },
 }
+
+
+def global_error_handler(exc_type, exc_value, exc_traceback):
+    if issubclass(exc_type, KeyboardInterrupt):
+        # Call the default exception handler for keyboard interrupts
+        sys.__excepthook__(exc_type, exc_value, exc_traceback)
+        return
+
+    print("An unhandled exception occurred:")
+    print(f"Type: {exc_type.__name__}")
+    print(f"Message: {exc_value}")
+    traceback.print_tb(exc_traceback)
+   
+# Set the global exception handler
+sys.excepthook = global_error_handler
