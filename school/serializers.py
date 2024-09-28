@@ -23,7 +23,6 @@ class ExamModelSerializer(serializers.ModelSerializer):
 
 class ExamModelSerializerPartial(ExamModelSerializer):   
     def to_representation(self, instance):
-        # This method ensures we return string representations of the subject and student in responses
         ret = super().to_representation(instance)
         ret.pop('student')
         return ret
@@ -36,7 +35,7 @@ class StudentModelSerializer(serializers.ModelSerializer):
         fields = '__all__'  # Include exams in the serialized output
 
     def to_representation(self, instance):
-        # This method ensures we return string representations of the subject and student in responses
+        # This method ensures we return string representations of the group in responses
         ret = super().to_representation(instance)
         ret['group'] = instance.group.name  # Use the subject's name
         return ret
