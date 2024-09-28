@@ -42,7 +42,7 @@ class StudentModel(models.Model):
         db_table = 'student'  
     
     def __str__(self):
-        return self.name
+        return f'{self.name} ({self.group.name})'
     
     @staticmethod
     def top_scoring_student_by_group(group_id):
@@ -81,7 +81,7 @@ class ExamModel(models.Model):
     date = models.DateField(verbose_name='Exam Date')
 
     def __str__(self):
-        return f"{self.student} - {self.subject} ({self.score})"
+        return f"{self.student.name} ({self.student.group.name}) - {self.subject} ({self.score})"
     
     class Meta:
         db_table = 'exam'
