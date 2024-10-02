@@ -8,19 +8,37 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='PersonModel',
+            name="PersonModel",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=200, verbose_name='Name')),
-                ('dob', models.DateField(verbose_name='Birth Date')),
-                ('sex', models.CharField(max_length=1, verbose_name='Sex')),
-                ('address', models.CharField(max_length=255, null=True, verbose_name='Address')),
-                ('phone', models.CharField(max_length=20, null=True, validators=[school.models.validate_phone_number], verbose_name='Phone number')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=200, verbose_name="Name")),
+                ("dob", models.DateField(verbose_name="Birth Date")),
+                ("sex", models.CharField(max_length=1, verbose_name="Sex")),
+                (
+                    "address",
+                    models.CharField(max_length=255, null=True, verbose_name="Address"),
+                ),
+                (
+                    "phone",
+                    models.CharField(
+                        max_length=20,
+                        null=True,
+                        validators=[school.models.validate_phone_number],
+                        verbose_name="Phone number",
+                    ),
+                ),
             ],
         ),
     ]

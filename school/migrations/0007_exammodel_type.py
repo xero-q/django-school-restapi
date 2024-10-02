@@ -6,13 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('school', '0006_delete_personmodel'),
+        ("school", "0006_delete_personmodel"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='exammodel',
-            name='type',
-            field=models.CharField(choices=[('Partial', 'Partial'), ('Final', 'Final')], default='Partial', max_length=200),
+            model_name="exammodel",
+            name="type",
+            field=models.CharField(
+                choices=[("Partial", "Partial"), ("Final", "Final")],
+                default="Partial",
+                max_length=200,
+            ),
         ),
     ]
