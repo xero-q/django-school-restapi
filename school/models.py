@@ -1,7 +1,11 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 import phonenumbers
+from django.db.models import F
+from django.contrib.auth.models import User
+from django.db.models import Q
 
+from .managers import StudentScoreManager
 
 # Create your models here.
 def validate_phone_number(value):
@@ -105,3 +109,67 @@ class ExamModel(models.Model):
 
     class Meta:
         db_table = "exam"
+
+    @staticmethod
+    def list_exams_students_subjects():
+        return (
+            ExamModel.objects.all()
+            .annotate(
+                student_name=F("student__name"),
+                subject_name=F("subject__name"),
+                group=F("student__group__name"),
+            )
+            .values("student_name", "subject_name", "group")
+            .order_by("student_name")
+        )
+
+
+class UserModel(models.Model):
+    full_name = models.CharField(max_length=255, verbose_name="Full Name")
+    email = models.CharField(max_length=100, unique=True, verbose_name="Email")
+    birthdate = models.DateField(verbose_name="Date of Birth")
+    phone_number = models.CharField(
+        max_length=20,
+        unique=True,
+        verbose_name="Phone Number",
+        validators=[validate_phone_number],
+    )
+
+    class Meta:
+        db_table = "user"
+
+    def __str__(self):
+        return f"{self.full_name} ({self.email})"
+
+
+class PersonModel(models.Model):
+    name = models.CharField(max_length=255, verbose_name="Name")
+    dob = models.DateField(verbose_name="Date of Birth")
+    email = models.EmailField(
+        verbose_name="Email",
+        unique=True,
+        error_messages={
+            "unique": "This email address is already in use.",
+            "invalid": "The email is invalid.",
+        },
+    )  
+
+    class Meta:
+        db_table = "people"
+
+    @staticmethod
+    def get_by_name_email(name, email):
+        return PersonModel.objects.filter(Q(name__icontains=name) & Q(email__icontains=email))
+
+class StudentAverageScore(models.Model):
+    student_name = models.CharField(max_length=255, primary_key=True)
+    group_name = models.CharField(max_length=255)
+    average_score = models.DecimalField(max_digits=5, decimal_places=2)
+
+    objects = StudentScoreManager()
+
+    class Meta:
+        # Tell Django not to create a table for this model
+        managed = False
+        # Name of the database view
+        db_table = 'students_average_score'

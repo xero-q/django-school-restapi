@@ -1,0 +1,1 @@
+psql -U postgres -h localhost -p 6000 test < 'school-backup-2024-10-19 19:30.sql'
