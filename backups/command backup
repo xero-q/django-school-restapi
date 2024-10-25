@@ -1,2 +1,0 @@
- docker exec -t postgres_db pg_dump -U postgres -h localhost -p 5432 school > 'school-backup.sql'
-
