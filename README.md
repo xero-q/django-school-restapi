@@ -1,6 +1,6 @@
 ### Django project with Django Rest Framework for School App
 
-#### Steps to run the project containerized
+#### Steps to run the project:
 - Install Docker and Docker Compose
 - Create a file `.env` in the root folder and set the following environment variables:
     - `DB_DATABASE`
