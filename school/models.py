@@ -2,7 +2,6 @@ from django.db import models
 from django.core.exceptions import ValidationError
 import phonenumbers
 from django.db.models import F
-from django.contrib.auth.models import User
 from django.db.models import Q
 
 from .managers import StudentScoreManager
@@ -59,6 +58,13 @@ class StudentModel(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.group.name})"
+
+    @property
+    def average_score(self):
+        exams = ExamModel.objects.filter(student=self)
+        avg_score = exams.aggregate(models.Avg('score')).get('score__avg', 0)
+        return avg_score or 0  # Return 0 if the student has no exams
+                
 
     @staticmethod
     def top_scoring_student_by_group(group_id):
