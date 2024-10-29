@@ -42,6 +42,7 @@ class StudentModelSerializer(serializers.ModelSerializer):
         # This method ensures we return string representations of the group in responses
         ret = super().to_representation(instance)
         ret["group"] = instance.group.name  # Use the subject's name
+        ret['average_score'] = instance.average_score
         return ret
 
     def validate_phone(self, value):
