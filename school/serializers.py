@@ -1,7 +1,6 @@
 from rest_framework import serializers
 import phonenumbers
-from .models import GroupModel, StudentAverageScore, StudentModel, SubjectModel, ExamModel, PersonModel
-
+from .models import GroupModel, StudentAverageScore, StudentModel, SubjectModel, ExamModel
 
 class GroupModelSerializer(serializers.ModelSerializer):
     class Meta:
@@ -62,20 +61,6 @@ class SubjectModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = SubjectModel
         fields = "__all__"
-
-
-class PersonModelSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PersonModel
-        fields = "__all__"
-
-    def to_representation(self, instance):
-        ret = super().to_representation(instance)
-        # ret.pop('email')
-        full_name = instance.name
-        last_name = " ".join(full_name.split(" ")[1:])
-        ret["lastname"] = last_name      
-        return ret
 
 
 class StudentAverageScoreSerializer(serializers.ModelSerializer):

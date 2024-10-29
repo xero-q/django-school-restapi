@@ -14,17 +14,11 @@ from .views import (
     students_by_group,
     top_student_by_group,
     ProcessGetPost,
-    PersonViewSet,
     price_coin,
     DownloadPeopleExcel,
     user_data,
     StudentAverageScoreList
 )
-
-from rest_framework.routers import DefaultRouter
-
-router = DefaultRouter()
-router.register(r'data', PersonViewSet)
 
 urlpatterns = [
     path("api/group", GroupListCreateView.as_view(), name="group-create-list"),
@@ -58,7 +52,6 @@ urlpatterns = [
         name="exam-update-delete-retrieve",
     ),
     path("user", user_form_view, name="user-form"),
-    path("", include(router.urls)), 
     path("people/excel",DownloadPeopleExcel.as_view(),name="download-excel"),
     path("process", ProcessGetPost.as_view(), name="process"),
     path("process/<int:pk>", process_detail, name="process-detail"),

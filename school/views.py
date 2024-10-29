@@ -8,11 +8,9 @@ from .models import (
     SubjectModel,
     ExamModel,
     UserModel,
-    PersonModel,
 )
 from .serializers import (
     GroupModelSerializer,
-    PersonModelSerializer,
     StudentAverageScoreSerializer,
     StudentModelSerializer,
     SubjectModelSerializer,
@@ -234,18 +232,6 @@ class ProcessGetPost(APIView):
             serializer.save()  # Save the valid data to the database
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class PersonViewSet(viewsets.ModelViewSet):
-    queryset = PersonModel.objects.all()
-    serializer_class = PersonModelSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
-    def get_queryset(self):
-        name = self.request.query_params.get('name') or ''
-        email = self.request.query_params.get('email') or ''
-
-        query_set = PersonModel.get_by_name_email(name, email)
-        return query_set
 
 class DownloadPeopleExcel(APIView):
     @staticmethod

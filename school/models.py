@@ -148,25 +148,6 @@ class UserModel(models.Model):
         return f"{self.full_name} ({self.email})"
 
 
-class PersonModel(models.Model):
-    name = models.CharField(max_length=255, verbose_name="Name")
-    dob = models.DateField(verbose_name="Date of Birth")
-    email = models.EmailField(
-        verbose_name="Email",
-        unique=True,
-        error_messages={
-            "unique": "This email address is already in use.",
-            "invalid": "The email is invalid.",
-        },
-    )  
-
-    class Meta:
-        db_table = "people"
-
-    @staticmethod
-    def get_by_name_email(name, email):
-        return PersonModel.objects.filter(Q(name__icontains=name) & Q(email__icontains=email))
-
 class StudentAverageScore(models.Model):
     student_name = models.CharField(max_length=255, primary_key=True)
     group_name = models.CharField(max_length=255)
