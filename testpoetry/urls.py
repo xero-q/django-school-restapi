@@ -44,4 +44,5 @@ urlpatterns = [
     ),
     path("redoc", SchemaView.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
     path("", include(urls)),
+    path('accounts/', include('allauth.urls')), 
 ]
