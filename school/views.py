@@ -106,12 +106,8 @@ def students_by_group(request):
     """
     groups = GroupModel.get_groups_with_student_count()
 
-    data = [
-        {"group_name": group.name, "student_count": group.student_count}
-        for group in groups
-    ]
-
-    return Response(data, status=status.HTTP_200_OK)
+    groups_serializer = GroupModelSerializer(groups, many=True)
+    return Response(groups_serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view()

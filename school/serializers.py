@@ -8,6 +8,13 @@ class GroupModelSerializer(serializers.ModelSerializer):
         model = GroupModel
         fields = "__all__"
 
+    def to_representation(self, instance):
+        # This method ensures we return string representations of the subject and student in responses
+        ret = super().to_representation(instance)
+        if hasattr(instance,'student_count'):
+            ret["student_count"] = instance.student_count
+        return ret
+
 
 class ExamModelSerializer(serializers.ModelSerializer):
     class Meta:
